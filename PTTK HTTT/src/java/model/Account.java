@@ -21,12 +21,19 @@ public class Account {
         this.email = email;
     }
     
+    public Account(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public Account(int id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;
     }
 
+    
+    
     public int getId() {
         return id;
     }

@@ -9,16 +9,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Đăng kí thành viên</title>
+        <title>Quản lý cửa hàng cho thuê truyện</title>
     </head>
 
     <body>
-        <form action="addRegisterUser" method="POST">
-            <input type="text" name="emailAddress" value="" placeholder="Nhập email">
-<!--              <input type="text" name="cfEmail" value="">
-              <input type="password" name="cfEmail" value="" placeholder="Nhập lại email">
-              <input type="password" name="password" value="" placeholder="Nhập mật khẩu">-->
-              <input type="submit" name="Register" value="">
-        </form>
+        <% String msg = (String) request.getAttribute("msg");%>
+        <p>${msg};</p>
+        <a href="gdDangKiThanhVien.jsp">Đăng kí thành viên</a>
+        <a href="gdDangNhap.jsp">Đăng nhập</a>
     </body>
 </html>

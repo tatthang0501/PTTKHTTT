@@ -20,11 +20,29 @@ public class User {
     private Account acc;
     private Name name;
     private Store store;
+    private Address[] addrs;
 
     public User() {
     }
 
-    public User(String id, Date DOB, int sex, int role, String phone, Account acc, Name name, Store store) {
+    public User(int sex, int role, String phone, Account acc, Name name) {
+        this.sex = sex;
+        this.role = role;
+        this.phone = phone;
+        this.acc = acc;
+        this.name = name;
+    }
+    
+    public User(Date DOB, int sex, int role, String phone, Account acc, Name name) {
+        this.DOB = DOB;
+        this.sex = sex;
+        this.role = role;
+        this.phone = phone;
+        this.acc = acc;
+        this.name = name;
+    }
+
+    public User(String id, Date DOB, int sex, int role, String phone, Account acc, Name name, Store store, Address[] addrs) {
         this.id = id;
         this.DOB = DOB;
         this.sex = sex;
@@ -33,7 +51,14 @@ public class User {
         this.acc = acc;
         this.name = name;
         this.store = store;
+        this.addrs = addrs;
     }
+    
+    
+
+    
+
+    
 
     public String getId() {
         return id;
@@ -98,5 +123,15 @@ public class User {
     public void setStore(Store store) {
         this.store = store;
     }
+
+    public Address[] getAddrs() {
+        return addrs;
+    }
+
+    public void setAddrs(Address[] addrs) {
+        this.addrs = addrs;
+    }
+    
+    
     
 }

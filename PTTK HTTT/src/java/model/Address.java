@@ -21,6 +21,15 @@ public class Address {
     public Address() {
     }
 
+    public Address( String houseNumber, String alley, String road, String ward, String district, String city) {
+        this.houseNumber = houseNumber;
+        this.alley = alley;
+        this.road = road;
+        this.ward = ward;
+        this.district = district;
+        this.city = city;
+    }
+    
     public Address(int id, String houseNumber, String alley, String road, String ward, String district, String city) {
         this.id = id;
         this.houseNumber = houseNumber;

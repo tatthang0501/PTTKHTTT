@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,41 +18,67 @@ import model.Account;
  *
  * @author tatth
  */
-public class AccountDAO{
+public class AccountDAO extends DAO {
 
-    Connection con = null;
-    Statement st = null;
-    ResultSet rset = null;
-    String url = "jdbc:mysql://localhost:3306/pttktestdb";
-    String user = "root";
-    String password = "@Thangnguyen5";
-    
     public AccountDAO() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(url, user, password);
-            st = con.createStatement();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        super();
     }
-    
-    public boolean checkRegisterAccount(Account account){
+
+    public boolean checkRegisterAccount(Account account) {
         boolean rs = false;
-        try{
+        try {
             st = con.createStatement();
             String sql = "SELECT * FROM tblAccount WHERE email = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1,account.getEmail());
+            ps.setString(1, account.getEmail());
             rset = ps.executeQuery();
-            while(rset.next()){
+            if (rset.next()) {
                 rs = true;
             }
-        }
-        catch(SQLException e){
-            rs = false;
+        } catch (SQLException e) {
             System.out.println("Error");
+        }
+        return rs;
+    }
+
+    public int saveAccount(Account account) {
+        boolean rs = false;
+        int i = -1;
+        try {
+            st = con.createStatement();
+            String sql = "INSERT INTO tblAccount(email,password) VALUES (?,?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, account.getEmail());
+            ps.setString(2, account.getPassword());
+            i = ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error!");
+        }
+        return i;
+    }
+
+    public boolean checkExistAccount(Account account) {
+        boolean rs = false;
+//        if (account.getEmail().contains("true") || account.getEmail().contains("=")
+//                || account.getPassword().contains("true") || account.getPassword().contains("=")) {
+//            return false;
+//        }
+//        String sql = "{call checkLogin(?,?)}";
+            String sql = "SELECT * FROM tblAccount WHERE email = ? AND password = ?";
+        try {
+//            CallableStatement cs = con.prepareCall(sql);
+            PreparedStatement cs = con.prepareStatement(sql);
+            cs.setString(1, account.getEmail());
+            cs.setString(2, account.getPassword());
+            ResultSet rsett = cs.executeQuery();
+            if(rsett.next()){
+                account.setId(rsett.getInt("id"));
+                account.setEmail(rsett.getString("email"));
+                account.setPassword(rsett.getString("password"));
+                rs = true;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error account!");
         }
         return rs;
     }

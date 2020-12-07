@@ -11,13 +11,13 @@ package model;
  */
 public class Author {
     private int id;
-    private Name name;
+    private String name;
     private String description;
 
     public Author() {
     }
 
-    public Author(int id, Name name, String description) {
+    public Author(int id,String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -31,11 +31,11 @@ public class Author {
         this.id = id;
     }
 
-    public Name getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(Name name) {
+    public void setName(String name) {
         this.name = name;
     }
 

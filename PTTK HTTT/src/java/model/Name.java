@@ -18,6 +18,12 @@ public class Name {
     public Name() {
     }
 
+    public Name(String firstName, String middleName, String lastName) {
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+    }
+    
     public Name(int id, String firstName, String middleName, String lastName) {
         this.id = id;
         this.firstName = firstName;

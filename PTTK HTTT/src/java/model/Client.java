@@ -10,5 +10,7 @@ package model;
  * @author tatth
  */
 public class Client extends User{
-    
+    public Client(){
+        super();
+    }
 }
