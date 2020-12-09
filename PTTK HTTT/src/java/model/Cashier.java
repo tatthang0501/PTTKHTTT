@@ -9,6 +9,8 @@ package model;
  *
  * @author Admin
  */
-class Cashier extends Staff{
-    
+public class Cashier extends Staff{
+    public Cashier(){
+        super();
+    }
 }

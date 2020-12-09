@@ -7,8 +7,11 @@ package DAO;
 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.Address;
+import model.User;
 
 /**
  *
@@ -42,5 +45,31 @@ public class AddressDAO extends DAO {
             System.out.println("Error");
         }
         return rs;
+    }
+    
+    public ArrayList<Address> getAddress(User user){
+        ArrayList<Address> listAddress = new ArrayList<Address>();
+        String sql = "SELECT * FROM tblAddress WHERE tblUserid = ?";
+        try{
+            st = con.createStatement();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(user.getId()));
+            ResultSet rsett = ps.executeQuery();
+            while(rsett.next()){
+                Address address = new Address();
+                address.setId(rsett.getInt("id"));
+                address.setHouseNumber(rsett.getString("houseNumber"));
+                address.setRoad(rsett.getString("road"));
+                address.setWard(rsett.getString("ward"));
+                address.setAlley(rsett.getString("alley"));
+                address.setCity(rsett.getString("city"));
+                address.setDistrict(rsett.getString("district"));
+                listAddress.add(address);
+            }
+        }
+        catch(SQLException e){
+            System.out.println("Error getting Address");
+        }
+        return listAddress;
     }
 }

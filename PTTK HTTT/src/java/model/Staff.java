@@ -9,6 +9,27 @@ package model;
  *
  * @author Admin
  */
-class Staff extends User{
+public class Staff extends User{
+    private int position;
+    private float salary;
+    public Staff(){
+        super();
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public float getSalary() {
+        return salary;
+    }
+
+    public void setSalary(float salary) {
+        this.salary = salary;
+    }
     
 }

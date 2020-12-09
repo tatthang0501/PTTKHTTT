@@ -11,14 +11,15 @@
 <%
     String bookId = request.getParameter("bookId");
     ArrayList<Book> list = (ArrayList<Book>) session.getAttribute("listBookFound");
+    
     BookDAO bDAO = new BookDAO();
     Book book = new Book();
-//    Book fullBook = new Book();
+    Book fullBook = new Book();
     for (Book b : list) {
         if (b.getId() == Integer.parseInt(bookId)) {
             book = b;
             list.remove(b); 
-//            fullBook = bDAO.getFullBook(book);
+            fullBook = bDAO.getFullBook(book);
             break;
         }
     }

@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author tatth
@@ -15,21 +17,13 @@ public class Book {
     private int year;
     private float price;
     private String description;
-    private BookAuthor[] author;
-    private BookCate[] cate;
+    private ArrayList<BookAuthor> author;
+    private ArrayList<BookCate> cate;
 
     public Book() {
     }
 
-    public Book(int id, String name, int year, float price, String description, BookAuthor[] author, BookCate[] cate) {
-        this.id = id;
-        this.name = name;
-        this.year = year;
-        this.price = price;
-        this.description = description;
-        this.author = author;
-        this.cate = cate;
-    }
+    
 
     
 
@@ -73,20 +67,21 @@ public class Book {
         this.description = description;
     }
 
-    public BookAuthor[] getAuthor() {
+    public ArrayList<BookAuthor> getAuthor() {
         return author;
     }
 
-    public void setBookAuthor(BookAuthor[] author) {
+    public void setAuthor(ArrayList<BookAuthor> author) {
         this.author = author;
     }
 
-    public BookCate[] getCate() {
+    public ArrayList<BookCate> getCate() {
         return cate;
     }
 
-    public void setCate(BookCate[] cate) {
+    public void setCate(ArrayList<BookCate> cate) {
         this.cate = cate;
     }
+
     
 }

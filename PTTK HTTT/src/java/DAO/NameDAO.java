@@ -7,7 +7,9 @@ package DAO;
 
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.Name;
 
 /**
@@ -41,5 +43,31 @@ public class NameDAO extends DAO {
             this.con.rollback();
         }
         return rs;
+    }
+    
+    public ArrayList<Name> getName(String Name){
+        ArrayList<Name> listName = new ArrayList<>();
+        String sql = "select * from tblName WHERE firstName LIKE ? OR middleName LIKE ? OR lastName LIKE ?";
+        try{
+            st = con.createStatement();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1,"%"+Name+"%");
+            ps.setString(2,"%"+Name+"%");
+            ps.setString(3,"%"+Name+"%");
+            
+            ResultSet rsett = ps.executeQuery();
+            while(rsett.next()){
+                int id = rsett.getInt("id");
+                String firstName = rsett.getString("firstName");
+                String middleName = rsett.getString("middleName");
+                String lastName = rsett.getString("lastName");
+                Name name = new Name(id, firstName, middleName, lastName);
+                listName.add(name);
+            }
+        }
+        catch(SQLException e){
+            System.out.println("Error getting names");
+        }
+        return listName;
     }
 }

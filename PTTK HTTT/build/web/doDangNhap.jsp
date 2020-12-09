@@ -22,18 +22,18 @@
     if(rs == true && user.getRole() == 1){
         session.setAttribute("client", user);
         msg = "Đăng nhập thành công, xin chào khách hàng ";
-        session.setAttribute("msg", msg);
+        session.setAttribute("loginMsg", msg);
         response.sendRedirect("/PTTK_HTTT/gdChinhKhachHang.jsp");
     }
     else if(rs == true && user.getRole() == 2){
         session.setAttribute("cashier", user);
         msg = "Đăng nhập thành công, xin chào NV Thu ngân ";
-        session.setAttribute("msg", msg);
+        session.setAttribute("loginMsg", msg);
         response.sendRedirect("/PTTK_HTTT/gdChinhNVThuNgan.jsp");
     }
     else{
         response.sendRedirect("/PTTK_HTTT/gdDangNhap.jsp?err=fail");
         msg = "Đăng nhập thất bại";
-        session.setAttribute("msg", msg);
+        session.setAttribute("loginMsg", msg);
     }
 %>

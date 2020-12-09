@@ -30,26 +30,33 @@
    client.setDOB(user.getDOB());
    
    ArrayList<RentedBook> listrb = new ArrayList<RentedBook>();
-   float rentingBillRentFee = 0; 
+   float rentingBillRentFee = 0;
+   float rentingBillDeposit = 0;
    for(Book b:listBookChosen){
        RentedBook r = new RentedBook();
        r.setBook(b);
        float rentFee = b.getPrice()*15/100;
+       float deposit = b.getPrice() * 80/100;
        r.setPrice(rentFee);
        listrb.add(r);
        rentingBillRentFee += rentFee;
-       System.out.println(b.getId());
+       rentingBillDeposit += deposit;
    }
 
    rentingBill.setRentedBook(listrb);
    rentingBill.setClient(client);
    rentingBill.setStatus(1);
+   rentingBill.setDeposit(rentingBillDeposit);
    rentingBill.setRentFee(rentingBillRentFee);
    RentingBillDAO rbDAO = new RentingBillDAO();
-    
+    System.out.println(rentingBill.getStatus());
+    System.out.println(rentingBill.getClient().getId());
+    System.out.println(rentingBill.getRentedBook().get(0).getBook().getId());
+    System.out.println(rentingBill.getRentedBook().size());
+    System.out.println(rentingBill.getDeposit());
+    System.out.println(rentingBill.getRentFee());
     String rentingMsg = "";
     boolean rs = rbDAO.saveRentingBill(rentingBill);
-    System.out.println(rentingBill.getId());
     if(rs){
         rentingMsg = "Thêm hóa đơn thành công";
         session.setAttribute("rentingMsg", rentingMsg);
@@ -62,4 +69,7 @@
         response.sendRedirect("/PTTK_HTTT/gdTimTruyen.jsp?err=fail");
         System.out.println("fail");
     }
+    session.removeAttribute("listbookChosen");
+    session.removeAttribute("listBookFound");
+    session.removeAttribute("rentingBill");
 %>

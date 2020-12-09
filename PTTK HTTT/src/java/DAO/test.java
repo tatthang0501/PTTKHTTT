@@ -6,8 +6,14 @@
 package DAO;
 
 import java.util.ArrayList;
+import model.Address;
 import model.Book;
+import model.BookCate;
+import model.Category;
+import model.Name;
 import model.RentedBook;
+import model.RentingBill;
+import model.User;
 
 /**
  *
@@ -16,20 +22,9 @@ import model.RentedBook;
 public class test {
 
     public static void main(String[] args) {
-        RentedBookDAO rbDAO = new RentedBookDAO();
-        ArrayList<RentedBook> list = new ArrayList<>();
-        Book book1 = new Book();
-        book1.setId(2);
-        Book book2 = new Book();
-        book2.setId(3);
-        RentedBook rb1 = new RentedBook();
-        rb1.setBook(book1);
-        RentedBook rb2 = new RentedBook();
-        rb2.setBook(book2);
-        list.add(rb1);
-        list.add(rb2);
-        for(RentedBook rb : list){
-            System.out.println(rb.getBook().getId());
-        }
+        Book book = new Book();
+        book.setId(20);
+        RentingBill rb = new RentingBill();
+        rb.setId(1);
     }
 }

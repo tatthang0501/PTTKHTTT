@@ -10,6 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Đăng nhập hệ thống</title>
+        <link rel="stylesheet" href="styles.css">
     </head>
     <% String registerMsg = (String) session.getAttribute("registerMsg");%>
     <body>
@@ -18,7 +19,7 @@
             <% session.removeAttribute("registerMsg"); 
             registerMsg = "";%>
           <form class="loginForm" action="doDangNhap.jsp" method="post">
-            <h1 class = >Đăng nhập vào hệ thống</h1>
+            <h1 class = >ĐĂNG NHẬP</h1>
             <table>
               <tr>
                 <td>Nhập email: </td>
@@ -31,10 +32,10 @@
             </table>
             <input type="submit" name="" value="Đăng nhập">
             <a href="gdDangKiThanhVien.jsp">Đăng kí thành viên</a>
-            <% String msg = (String) session.getAttribute("msg");%>
+            <% String msg = (String) session.getAttribute("loginMsg");%>
             <p>${msg}</p>
             <%  msg = "";
-                session.removeAttribute("msg"); %>
+                session.removeAttribute("loginMsg"); %>
           </form>
         </div>
     </body>

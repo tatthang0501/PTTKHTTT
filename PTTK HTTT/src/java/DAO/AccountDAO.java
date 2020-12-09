@@ -12,7 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import model.Account;
+import model.User;
 
 /**
  *
@@ -81,5 +83,25 @@ public class AccountDAO extends DAO {
             System.out.println("Error account!");
         }
         return rs;
+    }
+    
+    public Account getAccount(User user){
+        Account account = new Account();
+        String sql = "SELECT * FROM tblAccount WHERE id = ?";
+        try{
+            st = con.createStatement();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(user.getId()));
+            ResultSet rsett = ps.executeQuery();
+            if(rsett.next()){
+                account.setId(rsett.getInt("id"));
+                account.setEmail(rsett.getString("email"));
+                account.setPassword(rsett.getString("password"));
+            }
+        }
+        catch(SQLException e){
+            System.out.println("Error getting Account");
+        }
+        return account;
     }
 }

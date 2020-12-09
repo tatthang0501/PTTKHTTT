@@ -14,6 +14,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Chi Tiết Truyện</title>
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
         <div class="container stuFo">
@@ -24,6 +25,8 @@
           <tr>
             <th>Tên</th>
             <th>Năm xb</th>
+            <th>Tác giả</th>
+            <th>Thể loại</th>
             <th>Giá</th>
             <th>Mô tả</th>
             <th>Thêm</th>
@@ -32,6 +35,8 @@
               <tr>
                 <td><%= book.getName()%></td>
                 <td><%= book.getYear() %></td>
+                <td><%= book.getAuthor().get(0).getAuthor().getName() %></td>
+                <td><%= book.getCate().get(0).getCate().getName() %></td>
                 <td><%= book.getPrice() %></td>
                 <td><%= book.getDescription() %></td>
                 <td><a href="doThemTruyen.jsp?bookId=<%=book.getId()%>">Thêm</a></td>

@@ -5,13 +5,15 @@
  */
 package model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
  *
  * @author tatth
  */
-public class User {
+public class User implements Serializable{
     private String id;
     private Date DOB;
     private int sex;
@@ -20,7 +22,7 @@ public class User {
     private Account acc;
     private Name name;
     private Store store;
-    private Address[] addrs;
+    private ArrayList<Address> addrs;
 
     public User() {
     }
@@ -42,7 +44,7 @@ public class User {
         this.name = name;
     }
 
-    public User(String id, Date DOB, int sex, int role, String phone, Account acc, Name name, Store store, Address[] addrs) {
+    public User(String id, Date DOB, int sex, int role, String phone, Account acc, Name name, Store store, ArrayList<Address> addrs) {
         this.id = id;
         this.DOB = DOB;
         this.sex = sex;
@@ -53,11 +55,6 @@ public class User {
         this.store = store;
         this.addrs = addrs;
     }
-    
-    
-
-    
-
     
 
     public String getId() {
@@ -124,14 +121,11 @@ public class User {
         this.store = store;
     }
 
-    public Address[] getAddrs() {
+    public ArrayList<Address> getAddrs() {
         return addrs;
     }
 
-    public void setAddrs(Address[] addrs) {
+    public void setAddrs(ArrayList<Address> addrs) {
         this.addrs = addrs;
-    }
-    
-    
-    
+    }   
 }

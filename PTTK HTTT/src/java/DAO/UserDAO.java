@@ -11,9 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import model.User;
 import model.Account;
 import model.Address;
+import model.Name;
 
 /**
  *
@@ -87,26 +89,82 @@ public class UserDAO extends DAO {
         AccountDAO aDAO = new AccountDAO();
         if (aDAO.checkExistAccount(user.getAcc()) == true) {
 //            String sql = "{call getUser(?)}";
-              String sql = "SELECT * FROM tblUser WHERE tblAccountid = ?";
+            String sql = "SELECT * FROM tblUser WHERE tblAccountid = ?";
             try {
 //                CallableStatement cs = con.prepareCall(sql);
                 PreparedStatement cs = con.prepareStatement(sql);
                 cs.setInt(1, user.getAcc().getId());
                 ResultSet rsett = cs.executeQuery();
-                if(rsett.next()){
+                if (rsett.next()) {
                     user.setId(rsett.getString("id"));
                     user.setPhone(rsett.getString("phone"));
                     user.setRole(rsett.getInt("role"));
                     user.setSex(rsett.getInt("sex"));
                     rs = true;
                 }
-            }
-            catch(SQLException e){
+            } catch (SQLException e) {
                 System.out.println("Error");
                 rs = false;
             }
-        }  
+        }
         return rs;
     }
 
+    public ArrayList<User> getUsers(String userName) {
+        ArrayList<User> listUserFound = new ArrayList<>();
+        String sql = "SELECT * from tblUser where tblNameid = ? AND role = 1";
+        NameDAO nDAO = new NameDAO();
+        ArrayList<Name> listName = nDAO.getName(userName);
+        for (Name n : listName) {
+            try {
+                st = con.createStatement();
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setInt(1, n.getId());
+                ResultSet rsett = ps.executeQuery();
+                if (rsett.next()) {
+                    User user = new User();
+                    user.setId(Integer.toString(rsett.getInt("id")));
+                    user.setName(n);
+                    user.setPhone(rsett.getString("phone"));
+                    user.setRole(rsett.getInt("role"));
+                    user.setSex(rsett.getInt("sex"));
+                    listUserFound.add(user);
+                }
+            } catch (SQLException e) {
+                System.out.println("Error getting User");
+            }
+        }
+        
+        AddressDAO aDAO = new AddressDAO();
+        AccountDAO accDAO = new AccountDAO();
+        for(User user: listUserFound){
+            ArrayList<Address> listAddress = aDAO.getAddress(user);
+            user.setAddrs(listAddress);
+            Account account = accDAO.getAccount(user);
+            user.setAcc(account);
+        }
+        
+        return listUserFound;
+    }
+    
+//    public User getOneUser(int id){
+//        User user = new User();
+//        String sql = "SELECT * FROM tblUser WHERE id =?";
+//        try{
+//            st = con.createStatement();
+//            PreparedStatement ps = con.prepareStatement(sql);
+//            ps.setInt(1, id);
+//            ResultSet rsett = ps.executeQuery();
+//            if(rsett.next()){
+//                user.setId(Integer.toString(rsett.getInt("id")));
+//                user.setPhone(rsett.getString("phone"));
+//                user.setRole(rsett.getInt("role"));
+//                user.setSex(rsett.getInt("sex"));
+//            }
+//        }
+//        catch(SQLException e){
+//            System.out.println("Error");
+//        }
+//        return user;
+//    }
 }

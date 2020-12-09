@@ -8,6 +8,7 @@ package DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.Author;
 import model.Book;
 import model.BookAuthor;
@@ -21,15 +22,14 @@ public class BookAuthorDAO extends DAO{
         super();
     }
     
-    public BookAuthor[] getBookAuthor(Book book){
-        BookAuthor[] bookAuthorList = {};
+    public ArrayList<BookAuthor> getBookAuthor(Book book){
+        ArrayList<BookAuthor> listBookAuthor = new ArrayList<BookAuthor>();
         String sql = "SELECT * FROM tblBookAuthor WHERE tblBookid = ?";
         try{
             st = con.createStatement();
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, book.getId());
             ResultSet rsett = ps.executeQuery();
-            int i = 0;
             while(rsett.next()){
                 BookAuthor bookAuthor = new BookAuthor();
                 bookAuthor.setId(rsett.getInt("id"));
@@ -38,15 +38,14 @@ public class BookAuthorDAO extends DAO{
                 bookAuthor.setAuthor(author);
                 AuthorDAO aDAO = new AuthorDAO();
                 aDAO.getAuthor(bookAuthor);
-                bookAuthorList[i] = bookAuthor;
-                i++;
+                listBookAuthor.add(bookAuthor);
             }
-            book.setBookAuthor(bookAuthorList);
+            book.setAuthor(listBookAuthor);
         }
         catch(SQLException e){
             System.out.println("Error");
             
         }
-        return bookAuthorList;
+        return listBookAuthor;
     }
 }

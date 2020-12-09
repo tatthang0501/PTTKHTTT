@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Book;
+import model.RentedBook;
 
 /**
  *
@@ -22,11 +23,11 @@ public class BookDAO extends DAO{
     
     public ArrayList searchBook(String bookName){
         ArrayList<Book> listBookFound = new ArrayList<Book>();
-        String sql = "SELECT * FROM tblBook  WHERE (NOT EXISTS(SELECT id FROM tblRentedBook WHERE tblBookid = tblBook.id ) AND tblBook.name LIKE ? )\n" +
+        String sql = "SELECT * FROM tblBook  WHERE (NOT EXISTS(SELECT id FROM tblRentedBook WHERE tblBookid = tblBook.id ) AND tblBook.name LIKE ?)\n" +
 "                            	OR EXISTS(SELECT * FROM tblRentedBook\n" +
 "                                WHERE tblRentedBook.tblBookid = tblBook.id\n" +
-"                            	AND (tblBook.name LIKE ? )\n" +
-"                                AND date(tblRentedBook.returnDate) < date(now()))";
+"                            	AND (tblBook.name LIKE ?)\n" +
+"                                AND date(tblRentedBook.returnDate) < date(now()) AND datediff(now(),tblRentedBook.rentDate) > 35)";
         try{
             st = con.createStatement();
             PreparedStatement ps = con.prepareStatement(sql);
@@ -64,4 +65,25 @@ public class BookDAO extends DAO{
         return book;
     }
     
+    
+    public Book getBook(RentedBook rentedBook){
+        Book book = new Book();
+        String sql = "SELECT * FROM tblBook WHERE id = ?";
+        try{
+            st = con.createStatement();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, rentedBook.getBook().getId());
+            ResultSet rsett = ps.executeQuery();
+            if(rsett.next()){
+                book.setId(rsett.getInt("id"));
+                book.setPrice(rsett.getFloat("price"));
+                book.setYear(Integer.parseInt(rsett.getString("year")));
+                book.setName(rsett.getString("name"));
+                book = getFullBook(book);
+            }
+        }catch(SQLException e){
+            System.out.println("Error getting book");
+        }
+        return book;
+    }
 }
